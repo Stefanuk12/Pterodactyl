@@ -4,7 +4,7 @@
         "version": "PTDL_v2",
         "update_url": null
     },
-    "exported_at": "2022-06-07T21:43:33+01:00",
+    "exported_at": "2022-06-07T23:11:40+01:00",
     "name": "Plutonium",
     "author": "stefanukpadd@gmail.com",
     "description": "Run a Plutonium Server.",
@@ -13,16 +13,16 @@
         "ghcr.io\/parkervcp\/yolks:wine_latest": "ghcr.io\/parkervcp\/yolks:wine_latest"
     },
     "file_denylist": [],
-    "startup": "wine64 \"\/home\/container\/bin\/plutonium-bootstrapper-win32.exe\" \"${GAMETYPE}${GAMEMODE}\" $GAMEPATH -dedicated +start_map_rotate +set key $KEY +set net_port {{SERVER_PORT}} +set sv_config $CFG",
+    "startup": "wine64 \"${HOME}\/localappdata\/Plutonium\/bin\/plutonium-bootstrapper-win32.exe\" t6zm \"${HOME}\/pluto_t6_full_game\" -dedicated +start_map_rotate +set key {{KEY}} +set net_port {{SERVER_PORT}} +set sv_config {{CFG}}",
     "config": {
         "files": "{}",
-        "startup": "{\r\n    \"done\": \"server started\"\r\n}",
+        "startup": "{\r\n    \"done\": \"Heartbeat successful\"\r\n}",
         "logs": "{}",
         "stop": "^C"
     },
     "scripts": {
         "installation": {
-            "script": "#!\/bin\/bash\r\ncd \/mnt\/server\r\n# Install dependencies\r\napt install wget\r\ncurl https:\/\/raw.githubusercontent.com\/creationix\/nvm\/master\/install.sh | bash\r\nsource ~\/.profile\r\nnvm install node\r\nnode -v\r\nnpm install -g plutonium-installer\r\n# Verify install\r\nplutonium-installer -V\r\n# Install Game Server\r\nplutonium-installer install-game -s -v -f ${GAMETYPE}\r\n# Creating updater folder, if does not exist\r\nif [ ! -d .\/updater ]\r\nthen\r\nmkdir .\/updater\r\nfi\r\n# Installing bootstrapper \/ updater\r\nwget https:\/\/github.com\/mxve\/plutonium-updater.rs\/releases\/latest\/download\/plutonium-updater-x86_64-unknown-linux-gnu.tar.gz -O latestupdater.tar.gz -q --show-progress\r\ntar -xvf latestupdater.tar.gz -C .\r\nrm latestupdater.tar.gz\r\nchmod +x plutonium-updater\r\n.\/plutonium-updater -d .\r\nrm plutonium-updater\r\n# Cleanup\r\nplutonium-installer cleanup -p ${GAMEPATH}\r\nrm -d updater",
+            "script": "#!\/bin\/bash\r\ncd \/mnt\/server\r\n# Install dependencies\r\napt install wget\r\ncurl https:\/\/raw.githubusercontent.com\/creationix\/nvm\/master\/install.sh | bash\r\nsource ~\/.profile\r\nnvm install node\r\nnode -v\r\nnpm install -g plutonium-installer\r\n# Verify install\r\nplutonium-installer -V\r\n# Install Game Server\r\nplutonium-installer install-game -s -v -f ${GAMETYPE}\r\n# Creating updater folder, if does not exist\r\nif [ ! -d .\/updater ]\r\nthen\r\nmkdir .\/updater\r\nfi\r\n# Installing bootstrapper \/ updater\r\nwget https:\/\/github.com\/mxve\/plutonium-updater.rs\/releases\/latest\/download\/plutonium-updater-x86_64-unknown-linux-gnu.tar.gz -O latestupdater.tar.gz -q --show-progress\r\ntar -xvf latestupdater.tar.gz -C localappdata\/Plutonium\r\nrm latestupdater.tar.gz\r\nchmod +x localappdata\/Plutonium\/plutonium-updater\r\n.\/localappdata\/Plutonium\/plutonium-updater -d localappdata\/Plutonium\r\nrm localappdata\/Plutonium\/plutonium-updater\r\n# Cleanup\r\nplutonium-installer cleanup -p ${GAMEPATH} -v\r\nrm -d updater",
             "container": "ghcr.io\/parkervcp\/installers:debian",
             "entrypoint": "bash"
         }
