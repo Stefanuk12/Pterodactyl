@@ -1,0 +1,112 @@
+{
+    "_comment": "DO NOT EDIT: FILE GENERATED AUTOMATICALLY BY PTERODACTYL PANEL - PTERODACTYL.IO",
+    "meta": {
+        "version": "PTDL_v2",
+        "update_url": null
+    },
+    "exported_at": "2022-06-07T21:43:33+01:00",
+    "name": "Plutonium",
+    "author": "stefanukpadd@gmail.com",
+    "description": "Run a Plutonium Server.",
+    "features": null,
+    "docker_images": {
+        "ghcr.io\/parkervcp\/yolks:wine_latest": "ghcr.io\/parkervcp\/yolks:wine_latest"
+    },
+    "file_denylist": [],
+    "startup": "wine64 \"\/home\/container\/bin\/plutonium-bootstrapper-win32.exe\" \"${GAMETYPE}${GAMEMODE}\" $GAMEPATH -dedicated +start_map_rotate +set key $KEY +set net_port {{SERVER_PORT}} +set sv_config $CFG",
+    "config": {
+        "files": "{}",
+        "startup": "{\r\n    \"done\": \"server started\"\r\n}",
+        "logs": "{}",
+        "stop": "^C"
+    },
+    "scripts": {
+        "installation": {
+            "script": "#!\/bin\/bash\r\ncd \/mnt\/server\r\n# Install dependencies\r\napt install wget\r\ncurl https:\/\/raw.githubusercontent.com\/creationix\/nvm\/master\/install.sh | bash\r\nsource ~\/.profile\r\nnvm install node\r\nnode -v\r\nnpm install -g plutonium-installer\r\n# Verify install\r\nplutonium-installer -V\r\n# Install Game Server\r\nplutonium-installer install-game -s -v -f ${GAMETYPE}\r\n# Creating updater folder, if does not exist\r\nif [ ! -d .\/updater ]\r\nthen\r\nmkdir .\/updater\r\nfi\r\n# Installing bootstrapper \/ updater\r\nwget https:\/\/github.com\/mxve\/plutonium-updater.rs\/releases\/latest\/download\/plutonium-updater-x86_64-unknown-linux-gnu.tar.gz -O latestupdater.tar.gz -q --show-progress\r\ntar -xvf latestupdater.tar.gz -C .\r\nrm latestupdater.tar.gz\r\nchmod +x plutonium-updater\r\n.\/plutonium-updater -d .\r\nrm plutonium-updater\r\n# Cleanup\r\nplutonium-installer cleanup -p ${GAMEPATH}\r\nrm -d updater",
+            "container": "ghcr.io\/parkervcp\/installers:debian",
+            "entrypoint": "bash"
+        }
+    },
+    "variables": [
+        {
+            "name": "Game Mode",
+            "description": "The gamemode of the server, either zm (zombies) or mp (multiplayer)",
+            "env_variable": "GAMEMODE",
+            "default_value": "zm",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": "required|string|max:2|in:zm,mp",
+            "field_type": "text"
+        },
+        {
+            "name": "Server Key",
+            "description": "Your Server API Key, pasted from https:\/\/platform.plutonium.pw\/serverkeys",
+            "env_variable": "KEY",
+            "default_value": "",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": "required|string",
+            "field_type": "text"
+        },
+        {
+            "name": "Config Name",
+            "description": "Name of the config file the server should use",
+            "env_variable": "CFG",
+            "default_value": "dedicated.cfg",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": "required|string",
+            "field_type": "text"
+        },
+        {
+            "name": "Game Type",
+            "description": "The codename for the game, e.g. t6",
+            "env_variable": "GAMETYPE",
+            "default_value": "t6",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": "required|string|max:3|in:t6,t5,t4,iw5",
+            "field_type": "text"
+        },
+        {
+            "name": "Game Path",
+            "description": "The path to the game files",
+            "env_variable": "GAMEPATH",
+            "default_value": ".\/pluto_t6_full_game",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": "required|string",
+            "field_type": "text"
+        },
+        {
+            "name": "WINEDEBUG",
+            "description": "",
+            "env_variable": "WINEDEBUG",
+            "default_value": "fixme-all",
+            "user_viewable": false,
+            "user_editable": false,
+            "rules": "required|string",
+            "field_type": "text"
+        },
+        {
+            "name": "WINEARCH",
+            "description": "",
+            "env_variable": "WINEARCH",
+            "default_value": "win64",
+            "user_viewable": false,
+            "user_editable": false,
+            "rules": "required|string",
+            "field_type": "text"
+        },
+        {
+            "name": "WINEPREFIX",
+            "description": "",
+            "env_variable": "WINEPREFIX",
+            "default_value": "\/home\/container\/.wine",
+            "user_viewable": false,
+            "user_editable": false,
+            "rules": "required|string",
+            "field_type": "text"
+        }
+    ]
+}
