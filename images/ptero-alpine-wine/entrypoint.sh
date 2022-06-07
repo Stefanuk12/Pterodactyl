@@ -62,6 +62,12 @@ do
     winetricks -q $trick
 done
 
+# If .wine directory doesn't exist, copy backup
+if [ ! -d /home/container/.wine ]; 
+then echo "Wineprefix not found, initialiizing wine" && winecfg && /usr/sbin/winetricks
+echo "Configured Succesfully"
+fi;
+
 # Switch to the container's working directory
 cd /home/container || exit 1
 
