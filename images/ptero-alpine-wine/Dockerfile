@@ -1,11 +1,12 @@
 FROM ghcr.io/parkervcp/yolks:alpine
 
-# So we can install packages
-USER root
-
 # Install wine and wget
-RUN apk update
-RUN apk add wine && apk add winetricks --repository=http://dl-cdn.alpinelinux.org/alpine/edge/testing/ && apk add wget
+RUN apk update \
+ && apk add --update --no-cache wine \
+ && apk add --update --no-cache winetricks --repository=http://dl-cdn.alpinelinux.org/alpine/edge/testing/ \
+ && apk add --update --no-cache wget
+
+RUN adduser -D -h /home/container container
 
 # ENV
 ENV HOME=/home/container
