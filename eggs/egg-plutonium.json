@@ -4,7 +4,7 @@
         "version": "PTDL_v2",
         "update_url": null
     },
-    "exported_at": "2022-06-07T23:11:40+01:00",
+    "exported_at": "2022-06-08T18:51:22+01:00",
     "name": "Plutonium",
     "author": "stefanukpadd@gmail.com",
     "description": "Run a Plutonium Server.",
@@ -13,7 +13,7 @@
         "ghcr.io\/parkervcp\/yolks:wine_latest": "ghcr.io\/parkervcp\/yolks:wine_latest"
     },
     "file_denylist": [],
-    "startup": "wine64 \"${HOME}\/localappdata\/Plutonium\/bin\/plutonium-bootstrapper-win32.exe\" t6zm \"${HOME}\/pluto_t6_full_game\" -dedicated +start_map_rotate +set key {{KEY}} +set net_port {{SERVER_PORT}} +set sv_config {{CFG}}",
+    "startup": "cd \"${HOME}\/localappdata\/Plutonium\/\" && wine64 bin\/plutonium-bootstrapper-win32.exe t6zm \"${HOME}\/pluto_${GAMETYPE}_full_game\" -dedicated +start_map_rotate +set key {{KEY}} +set net_port {{SERVER_PORT}} +set sv_config {{CFG}}",
     "config": {
         "files": "{}",
         "startup": "{\r\n    \"done\": \"Heartbeat successful\"\r\n}",
@@ -69,18 +69,8 @@
             "field_type": "text"
         },
         {
-            "name": "Game Path",
-            "description": "The path to the game files",
-            "env_variable": "GAMEPATH",
-            "default_value": ".\/pluto_t6_full_game",
-            "user_viewable": true,
-            "user_editable": true,
-            "rules": "required|string",
-            "field_type": "text"
-        },
-        {
             "name": "WINEDEBUG",
-            "description": "",
+            "description": "Do not edit.",
             "env_variable": "WINEDEBUG",
             "default_value": "fixme-all",
             "user_viewable": false,
@@ -90,7 +80,7 @@
         },
         {
             "name": "WINEARCH",
-            "description": "",
+            "description": "Do not edit.",
             "env_variable": "WINEARCH",
             "default_value": "win64",
             "user_viewable": false,
@@ -100,7 +90,7 @@
         },
         {
             "name": "WINEPREFIX",
-            "description": "",
+            "description": "Do not edit.",
             "env_variable": "WINEPREFIX",
             "default_value": "\/home\/container\/.wine",
             "user_viewable": false,
