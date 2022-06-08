@@ -4,7 +4,7 @@
         "version": "PTDL_v2",
         "update_url": null
     },
-    "exported_at": "2022-06-08T18:51:22+01:00",
+    "exported_at": "2022-06-08T19:04:27+01:00",
     "name": "Plutonium",
     "author": "stefanukpadd@gmail.com",
     "description": "Run a Plutonium Server.",
@@ -17,7 +17,7 @@
     "config": {
         "files": "{}",
         "startup": "{\r\n    \"done\": \"Heartbeat successful\"\r\n}",
-        "logs": "{}",
+        "logs": "{\r\n    \"custom\": false,\r\n    \"location\": \"logs\/latest.log\"\r\n}",
         "stop": "^C"
     },
     "scripts": {
