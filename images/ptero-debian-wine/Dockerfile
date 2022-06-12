@@ -9,7 +9,6 @@ LABEL   author="Michael Parker" maintainer="parker@pterodactyl.io"
 RUN     dpkg --add-architecture i386 \
         && apt update -y \
         && apt install -y --no-install-recommends gnupg2 tzdata software-properties-common libntlm0 winbind xvfb xauth python3 libncurses5:i386 libncurses6:i386
-RUN     bash -c "$(wget -O - https://apt.llvm.org/llvm.sh)"
 
 # Install winehq-stable and with recommends
 RUN     wget -nc https://dl.winehq.org/wine-builds/winehq.key \
@@ -26,7 +25,6 @@ RUN	    wget -q -O /usr/sbin/winetricks https://raw.githubusercontent.com/Winetr
 
 ENV     HOME=/home/container
 ENV     WINEPREFIX=/home/container/.wine
-ENV     WINEDLLOVERRIDES="mscoree,mshtml="
 ENV     DISPLAY=:0
 ENV     DISPLAY_WIDTH=1024
 ENV     DISPLAY_HEIGHT=768
