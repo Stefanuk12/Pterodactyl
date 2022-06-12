@@ -4,13 +4,13 @@
         "version": "PTDL_v2",
         "update_url": null
     },
-    "exported_at": "2022-06-12T21:23:49+01:00",
+    "exported_at": "2022-06-12T21:55:40+01:00",
     "name": "Plutonium",
     "author": "stefanukpadd@gmail.com",
     "description": "Run a Plutonium Server.",
     "features": null,
     "docker_images": {
-        "ghcr.io\/stefanuk12\/ptero-debian-wine:dev": "ghcr.io\/stefanuk12\/ptero-debian-wine:dev"
+        "ghcr.io\/stefanuk12\/ptero-plutonium:dev": "ghcr.io\/stefanuk12\/ptero-plutonium:dev"
     },
     "file_denylist": [],
     "startup": "cd \"${HOME}\/localappdata\/Plutonium\/\" && wine64 bin\/plutonium-bootstrapper-win32.exe \"${GAMETYPE}${GAMEMODE}\" \"${HOME}\/pluto_${GAMETYPE}_full_game\" -dedicated +start_map_rotate +set key {{KEY}} +set net_port {{SERVER_PORT}} +set sv_config \"${CFG}\"",
