@@ -23,6 +23,11 @@ RUN     wget -nc https://dl.winehq.org/wine-builds/winehq.key \
 RUN	    wget -q -O /usr/sbin/winetricks https://raw.githubusercontent.com/Winetricks/winetricks/master/src/winetricks \
         && chmod +x /usr/sbin/winetricks
 
+#
+RUN mkdir /tmp/.X11-unix && \
+    chmod 1777 /tmp/.X11-unix
+
+#
 ENV     HOME=/home/container
 ENV     WINEPREFIX=/home/container/.wine
 ENV     DISPLAY=:0
