@@ -15,6 +15,10 @@ fi
 # Install necessary to run packages
 echo "First launch will throw some errors. Ignore them"
 
+if [ ! -d /home/container/.wine ]; then 
+	source ~/.bashrc && winecfg
+fi;
+
 mkdir -p $WINEPREFIX
 
 # Check if wine-gecko required and install it if so
