@@ -1,4 +1,4 @@
-FROM ptero-debian-wine
+FROM ghcr.io/stefanuk12/ptero-debian-wine:dev
 
 USER container
 WORKDIR	/home/container
