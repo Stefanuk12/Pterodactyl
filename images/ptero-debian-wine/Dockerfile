@@ -24,9 +24,8 @@ RUN	    wget -q -O /usr/sbin/winetricks https://raw.githubusercontent.com/Winetr
         && chmod +x /usr/sbin/winetricks
 
 #
-RUN mkdir /tmp/.X11-unix && \
-    chmod +x /tmp/.X11-unix \
-    chmod 777 /tmp/.X11-unix
+RUN mkdir /tmp/.X11-unix
+RUN chmod 777 /tmp/.X11-unix
 
 #
 ENV     HOME=/home/container
