@@ -9,14 +9,14 @@ chmod +x localappdata/Plutonium/plutonium-updater
 ./localappdata/Plutonium/plutonium-updater -d localappdata/Plutonium
 rm localappdata/Plutonium/plutonium-updater
 
-# IW4M Admin
-if [ ${IW4MA_ENABLED} ]; then 
-    ( cd /home/container/iw4madmin && dotnet Lib/IW4MAdmin.dll & )
-fi;
-
 # Replace Startup Variables
 MODIFIED_STARTUP=$(echo ${STARTUP} | sed -e 's/{{/${/g' -e 's/}}/}/g')
 echo ":/home/container$ ${MODIFIED_STARTUP}"
 
 # Run the Server
 eval ${MODIFIED_STARTUP}
+
+# IW4M Admin
+if [ ${IW4MA_ENABLED} ]; then 
+    ( cd /home/container/iw4madmin && dotnet Lib/IW4MAdmin.dll)
+fi;
