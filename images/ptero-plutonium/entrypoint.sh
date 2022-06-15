@@ -11,7 +11,7 @@ rm localappdata/Plutonium/plutonium-updater
 
 # IW4M Admin
 if [ ${IW4MA_ENABLED} ]; then 
-    ( cd /home/container/iw4madmin && dotnet Lib/IW4MAdmin.dll)
+    ( cd /home/container/iw4madmin && dotnet Lib/IW4MAdmin.dll & )
 fi;
 
 # Replace Startup Variables
