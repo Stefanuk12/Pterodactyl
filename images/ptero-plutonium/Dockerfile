@@ -8,7 +8,7 @@ RUN rm packages-microsoft-prod.deb
 RUN apt-get update; \
     apt-get install -y apt-transport-https && \
     apt-get update && \
-    apt-get install -y dotnet-sdk-6.0 aspnetcore-runtime-6.0
+    apt-get install -y dotnet-sdk-3.1 aspnetcore-runtime-3.1
 
 #
 ENV DOTNET_CLI_TELEMETRY_OPTOUT=1
