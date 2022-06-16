@@ -15,8 +15,8 @@ if [ ${IW4MA_ENABLED} ]; then
 fi;
 
 # RCON
-npm install -g rcon-cmd
-(rcon-cmd -udp -p ${SERVER_PORT} -pw ${RCON_PASSWORD} -c false & )
+npm install rcon-cmd
+(node node_modules/rcon-cmd/index.js -udp -p ${SERVER_PORT} -pw ${RCON_PASSWORD} -c false & )
 
 # Replace Startup Variables
 MODIFIED_STARTUP=$(echo ${STARTUP} | sed -e 's/{{/${/g' -e 's/}}/}/g')

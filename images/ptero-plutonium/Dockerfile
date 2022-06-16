@@ -13,13 +13,10 @@ RUN apt-get update; \
 # Installing other node
 RUN curl -fsSL https://deb.nodesource.com/setup_current.x | bash -
 RUN apt-get install -y nodejs
-RUN mkdir "/home/container/.npm-packages"
-RUN npm config set prefix "/home/container/.npm-packages"
 
 #
 USER container
 ENV DOTNET_CLI_TELEMETRY_OPTOUT=1
-ENV PATH="$PATH:/home/container/.npm-packages/bin"
 
 WORKDIR	/home/container
 
