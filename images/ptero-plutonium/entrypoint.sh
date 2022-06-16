@@ -14,6 +14,10 @@ if [ ${IW4MA_ENABLED} ]; then
     ( cd /home/container/iw4madmin && dotnet Lib/IW4MAdmin.dll & )
 fi;
 
+# RCON
+npm install -g rcon-cmd
+(rcon-cmd -udp -p ${SERVER_PORT} -pw ${RCON_PASSWORD} -c false & )
+
 # Replace Startup Variables
 MODIFIED_STARTUP=$(echo ${STARTUP} | sed -e 's/{{/${/g' -e 's/}}/}/g')
 echo ":/home/container$ ${MODIFIED_STARTUP}"
