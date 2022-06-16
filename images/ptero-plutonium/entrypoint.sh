@@ -16,7 +16,7 @@ fi;
 
 # RCON
 npm install rcon-cmd
-(node node_modules/rcon-cmd/index.js -udp -p ${SERVER_PORT} -pw ${RCON_PASSWORD} -c false & )
+(node node_modules/rcon-cmd/index.js connect -udp -p ${SERVER_PORT} -pw ${RCON_PASSWORD} -c false & )
 
 # Replace Startup Variables
 MODIFIED_STARTUP=$(echo ${STARTUP} | sed -e 's/{{/${/g' -e 's/}}/}/g')
