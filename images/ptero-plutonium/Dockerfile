@@ -10,10 +10,14 @@ RUN apt-get update; \
     apt-get update && \
     apt-get install -y dotnet-sdk-3.1 aspnetcore-runtime-3.1
 
+# Installing other node
+RUN curl -fsSL https://deb.nodesource.com/setup_current.x | bash -
+RUN apt-get install -y nodejs
+
 #
+USER container
 ENV DOTNET_CLI_TELEMETRY_OPTOUT=1
 
-USER container
 WORKDIR	/home/container
 
 COPY ./entrypoint.sh /entrypoint.sh
