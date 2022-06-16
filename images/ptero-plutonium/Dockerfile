@@ -20,7 +20,6 @@ RUN npm config set prefix "/home/container/.npm-packages"
 USER container
 ENV DOTNET_CLI_TELEMETRY_OPTOUT=1
 ENV PATH="$PATH:/home/container/.npm-packages/bin"
-ENV MANPATH="${MANPATH-$(manpath)}:/home/container/.npm-packages/share/man"
 
 WORKDIR	/home/container
 
