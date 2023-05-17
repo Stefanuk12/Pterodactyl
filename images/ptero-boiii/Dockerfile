@@ -11,15 +11,12 @@ RUN apt-get update; \
     apt-get install -y dotnet-sdk-3.1 aspnetcore-runtime-3.1
 
 # Installing other dependencies
-RUN apt-get install unzip
+RUN apt-get install steamcmd unzip
 
 # Setting up container user
 USER container
 ENV DOTNET_CLI_TELEMETRY_OPTOUT=1
 WORKDIR	/home/container
-
-# Installing steamcmd
-RUN apt-get install steamcmd
 
 # Copy over entrypoint
 COPY ./entrypoint.sh /entrypoint.sh
