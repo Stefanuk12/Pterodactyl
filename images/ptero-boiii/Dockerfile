@@ -18,9 +18,6 @@ USER container
 ENV DOTNET_CLI_TELEMETRY_OPTOUT=1
 WORKDIR	/home/container
 
-# Installing steamcmd
-RUN curl -sqL "https://steamcdn-a.akamaihd.net/client/installer/steamcmd_linux.tar.gz" | tar zxvf -
-
 # Copy over entrypoint
 COPY ./entrypoint.sh /entrypoint.sh
 CMD	["/bin/bash", "/entrypoint.sh"]
