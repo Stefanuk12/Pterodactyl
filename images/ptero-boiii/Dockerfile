@@ -11,7 +11,7 @@ RUN apt-get update; \
     apt-get install -y dotnet-sdk-3.1 aspnetcore-runtime-3.1
 
 # Installing other dependencies
-RUN apt-get install unzip lib32gcc1
+RUN apt-get install unzip
 
 # Setting up container user
 USER container
