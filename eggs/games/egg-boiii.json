@@ -4,10 +4,10 @@
         "version": "PTDL_v2",
         "update_url": null
     },
-    "exported_at": "2023-05-21T15:46:04+01:00",
+    "exported_at": "2023-05-21T17:00:42+01:00",
     "name": "boiii",
     "author": "stefanukpadd@gmail.com",
-    "description": "Run a BOIII dedicated server.\r\n\r\nNote: Multiplayer zone files are PRE-installed. If you want to host zombies or campaign, make sure to delete those zone files and install the correct zone files.",
+    "description": "Run a BOIII dedicated server.\r\n\r\nNote: Installation slimming is enabled by default, removing the pre-installed multiplayer maps. This is to reduce the size of the server. You can disable this and have all multiplayer maps installed by default. It's recommended to keep this installed and manually add the maps you want.",
     "features": null,
     "docker_images": {
         "ghcr.io\/stefanuk12\/ptero-boiii:latest": "ghcr.io\/stefanuk12\/ptero-boiii:latest"
@@ -22,7 +22,7 @@
     },
     "scripts": {
         "installation": {
-            "script": "#!\/bin\/bash\r\n\r\n# Install game server - create folder to hold files\r\ninstall_dir=\"\/mnt\/server\"\r\ncd \/tmp\r\nmkdir -p \"${install_dir}\/steamcmd\"\r\ncurl -sSL -o steamcmd.tar.gz https:\/\/steamcdn-a.akamaihd.net\/client\/installer\/steamcmd_linux.tar.gz\r\ntar -xzvf steamcmd.tar.gz -C \"${install_dir}\/steamcmd\"\r\nmkdir -p \"${install_dir}\/steamapps\" # Fix steamcmd disk write error when this folder is missing\r\ncd \"${install_dir}\/steamcmd\"\r\n.\/steamcmd.sh +@sSteamCmdForcePlatformType windows +force_install_dir \"${install_dir}\" +login anonymous +app_update 545990 validate +quit\r\n\r\n# Install server files\r\ncd \"${install_dir}\"\r\ncp -r .\/UnrankedServer\/* .\r\ncurl -Ls \"https:\/\/codeload.github.com\/Dss0\/t7-server-config\/zip\/refs\/heads\/main\" -o main.zip\r\nunzip -o main.zip\r\ncp -r .\/t7-server-config-main\/* .\r\necho \"Installed server config files\"\r\n\r\n# Install boiii\r\nmkdir -p mods\r\ncurl -Ls \"https:\/\/updater.xlabs.dev\/boiii\/boiii.exe\" -o \"boiii.exe\"\r\necho \"Installed boiii\"\r\n\r\n# Install rcon client\r\ncurl -Ls \"https:\/\/github.com\/Stefanuk12\/cod-rcon\/releases\/latest\/download\/cod-rcon-x86_64-unknown-linux-gnu.tar.gz\" -o cod-rcon.tar.gz\r\ntar -xzvf cod-rcon.tar.gz -C \"${install_dir}\"\r\n\r\n# Installing IW4M\r\nif [ ${IW4M} ]\r\nthen\r\n# Create the installation directory\r\nmkdir -p \"${install_dir}\/iw4m\"\r\ncd \"${install_dir}\/iw4m\"\r\n\r\n# Download IW4M\r\ncurl -Ls \"https:\/\/github.com\/RaidMax\/IW4M-Admin\/releases\/download\/2023.05.15.1-prerelease\/IW4MAdmin-2023.05.15.1.zip\" -o main.zip\r\nunzip -o main.zip\r\nrm main.zip\r\n\r\n# Download the config\r\ncurl -Ls \"https:\/\/cdn.discordapp.com\/attachments\/749611171216359474\/1108504949836496996\/Configuration.zip\" -o main_iw4m.zip\r\nunzip -o main_iw4m.zip -d Configuration\r\nrm main_iw4m.zip\r\n\r\n# CD back\r\ncd \"${install_dir}\"\r\nfi\r\n\r\n# Cleanup\r\nrm -r steamapps steamcmd main.zip README.md t7-server-config-main UnrankedServer cod-rcon.tar.gz\r\nrm BOIII_CP_Server.bat BOIII_MP_Server.bat BOIII_ZM_Server.bat copydedicated.bat Launch_Server.bat\r\n\r\n# Done\r\necho \"Done!\"",
+            "script": "#!\/bin\/bash\r\n\r\n# Install game server - create folder to hold files\r\ninstall_dir=\"\/mnt\/server\"\r\ncd \/tmp\r\nmkdir -p \"${install_dir}\/steamcmd\"\r\ncurl -sSL -o steamcmd.tar.gz https:\/\/steamcdn-a.akamaihd.net\/client\/installer\/steamcmd_linux.tar.gz\r\ntar -xzvf steamcmd.tar.gz -C \"${install_dir}\/steamcmd\"\r\nmkdir -p \"${install_dir}\/steamapps\" # Fix steamcmd disk write error when this folder is missing\r\ncd \"${install_dir}\/steamcmd\"\r\n.\/steamcmd.sh +@sSteamCmdForcePlatformType windows +force_install_dir \"${install_dir}\" +login anonymous +app_update 545990 validate +quit\r\n\r\n# Install server files\r\ncd \"${install_dir}\"\r\ncp -r .\/UnrankedServer\/* .\r\ncurl -Ls \"https:\/\/codeload.github.com\/Dss0\/t7-server-config\/zip\/refs\/heads\/main\" -o main.zip\r\nunzip -o main.zip\r\ncp -r .\/t7-server-config-main\/* .\r\necho \"Installed server config files\"\r\n\r\n# Install boiii\r\nmkdir -p mods\r\ncurl -Ls \"https:\/\/updater.xlabs.dev\/boiii\/boiii.exe\" -o \"boiii.exe\"\r\necho \"Installed boiii\"\r\n\r\n# Install rcon client\r\ncurl -Ls \"https:\/\/github.com\/Stefanuk12\/cod-rcon\/releases\/latest\/download\/cod-rcon-x86_64-unknown-linux-gnu.tar.gz\" -o cod-rcon.tar.gz\r\ntar -xzvf cod-rcon.tar.gz -C \"${install_dir}\"\r\n\r\n# Installing IW4M\r\nif [ ${IW4M} ]\r\nthen\r\n    # Create the installation directory\r\n    mkdir -p \"${install_dir}\/iw4m\"\r\n    cd \"${install_dir}\/iw4m\"\r\n\r\n    # Download IW4M\r\n    curl -Ls \"https:\/\/github.com\/RaidMax\/IW4M-Admin\/releases\/download\/2023.05.15.1-prerelease\/IW4MAdmin-2023.05.15.1.zip\" -o main.zip\r\n    unzip -o main.zip\r\n    rm main.zip\r\n\r\n    # Download the config\r\n    curl -Ls \"https:\/\/cdn.discordapp.com\/attachments\/749611171216359474\/1108504949836496996\/Configuration.zip\" -o main_iw4m.zip\r\n    unzip -o main_iw4m.zip -d Configuration\r\n    rm main_iw4m.zip\r\n\r\n    # CD back\r\n    cd \"${install_dir}\"\r\nfi\r\n\r\n# Cleanup\r\nrm -r steamapps steamcmd main.zip README.md t7-server-config-main UnrankedServer cod-rcon.tar.gz\r\nrm BOIII_CP_Server.bat BOIII_MP_Server.bat BOIII_ZM_Server.bat copydedicated.bat Launch_Server.bat\r\n\r\n# Slimming\r\nif [ ${SLIM_ZONE} ]\r\nthen\r\n    # Create the folders\r\n    essential_dir=\"${install_dir}\/essential\"\r\n    zone_dir=\"${install_dir}\/zone\"\r\n    mkdir -p $essential_dir\r\n\r\n    # Copy needed files over\r\n    cp -r ${zone_dir}\/{*patch*,*core*,*patch*,$SERVER_CFG} $essential_dir\r\n\r\n    # Transfer files over and delete essential dir\r\n    rm -r ${zone_dir}\/*\r\n    cp -r $essential_dir\/* ${zone_dir}\r\n    rm -r $essential_dir\r\n    echo \"Slimmed installation\"\r\nfi\r\n\r\n# Done\r\necho \"Done!\"",
             "container": "ghcr.io\/parkervcp\/installers:debian",
             "entrypoint": "bash"
         }
@@ -76,6 +76,16 @@
             "user_viewable": true,
             "user_editable": true,
             "rules": "required|string",
+            "field_type": "text"
+        },
+        {
+            "name": "Installation Slimming",
+            "description": "Removes all unnecessary files from zone, except the ones that are needed.",
+            "env_variable": "SLIM_ZONE",
+            "default_value": "1",
+            "user_viewable": false,
+            "user_editable": false,
+            "rules": "required|boolean",
             "field_type": "text"
         }
     ]
