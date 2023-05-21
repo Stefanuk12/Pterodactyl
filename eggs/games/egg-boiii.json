@@ -4,7 +4,7 @@
         "version": "PTDL_v2",
         "update_url": null
     },
-    "exported_at": "2023-05-21T17:00:42+01:00",
+    "exported_at": "2023-05-21T20:25:12+01:00",
     "name": "boiii",
     "author": "stefanukpadd@gmail.com",
     "description": "Run a BOIII dedicated server.\r\n\r\nNote: Installation slimming is enabled by default, removing the pre-installed multiplayer maps. This is to reduce the size of the server. You can disable this and have all multiplayer maps installed by default. It's recommended to keep this installed and manually add the maps you want.",
@@ -83,8 +83,8 @@
             "description": "Removes all unnecessary files from zone, except the ones that are needed.",
             "env_variable": "SLIM_ZONE",
             "default_value": "1",
-            "user_viewable": false,
-            "user_editable": false,
+            "user_viewable": true,
+            "user_editable": true,
             "rules": "required|boolean",
             "field_type": "text"
         }
