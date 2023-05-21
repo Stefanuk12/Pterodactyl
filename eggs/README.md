@@ -55,6 +55,7 @@ On server installation, all map files are removed. Only core files are kept whic
 # [IW4M](misc/egg-iw4madmin.json)
 
 ## Stats
+
 - Each server roughly takes up 100 MiB of disk space
 - Each server takes up roughly 200-400 MiB of memory usage
 - CPU usage is usaully quite low (below 5%) but can spike up to 200% on startup
