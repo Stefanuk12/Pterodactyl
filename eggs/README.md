@@ -17,6 +17,12 @@ This egg is no longer supported and maintained.
 
 # [BOIII](games/egg-boiii.json)
 
+## Stats
+
+- Each server roughly takes up 3-4 GiB of disk space, if slimmed correctly
+- Each server takes up roughly 2-4 GiB of memory usage
+- CPU usage is rougly between 40% and 100%
+  
 ## Server Config
 
 This is the configuration file the server will use. Make sure this file is within the `zone` folder.
@@ -48,6 +54,12 @@ On server installation, all map files are removed. Only core files are kept whic
 
 # [IW4M](misc/egg-iw4madmin.json)
 
+## Stats
+- Each server roughly takes up 100 MiB of disk space
+- Each server takes up roughly 200-400 MiB of memory usage
+- CPU usage is usaully quite low (below 5%) but can spike up to 200% on startup
+
+## Setup
 - Webfront is automatically configurated on server start, so do not change (all changes will be overridden)
 - You must set the servers within `/Configuration/IW4MAdminSettings.json` yourself. 
   - The IP address, port, and RCON password can be found within the BOIII's server panel
