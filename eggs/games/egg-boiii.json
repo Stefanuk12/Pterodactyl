@@ -4,7 +4,7 @@
         "version": "PTDL_v2",
         "update_url": null
     },
-    "exported_at": "2023-05-21T21:16:13+01:00",
+    "exported_at": "2023-05-21T21:41:48+01:00",
     "name": "boiii",
     "author": "stefanukpadd@gmail.com",
     "description": "Run a BOIII dedicated server.\r\n\r\nNote: Installation slimming is enabled by default, removing the pre-installed multiplayer maps. This is to reduce the size of the server. You can disable this and have all multiplayer maps installed by default. It's recommended to keep this installed and manually add the maps you want.",
@@ -13,7 +13,7 @@
         "ghcr.io\/stefanuk12\/ptero-boiii:latest": "ghcr.io\/stefanuk12\/ptero-boiii:latest"
     },
     "file_denylist": [],
-    "startup": "[ $IW4M ] && export DOTNET_CLI_TELEMETRY_OPTOUT=1 && sleep 30 && dotnet iw4m\/Lib\/IW4MAdmin.dll &\r\nwine64 boiii.exe -dedicated -headless +set fs_game \"{{MOD_FOLDER}}\" +set net_port \"{{SERVER_PORT}}\" +set logfile 2 +exec \"{{SERVER_CFG}}\" &\r\n{ chmod +x cod-rcon; sleep 30; echo \"Running RCON client\"; .\/cod-rcon -O -P \"{{SERVER_PORT}}\" -p {{RCON_PASSWORD}}; }",
+    "startup": "[ $IW4M == 1 ] && export DOTNET_CLI_TELEMETRY_OPTOUT=1 && sleep 30 && dotnet iw4m\/Lib\/IW4MAdmin.dll &\r\nwine64 boiii.exe -dedicated -headless +set fs_game \"{{MOD_FOLDER}}\" +set net_port \"{{SERVER_PORT}}\" +set logfile 2 +exec \"{{SERVER_CFG}}\" &\r\n{ chmod +x cod-rcon; sleep 30; echo \"Running RCON client\"; .\/cod-rcon -O -P \"{{SERVER_PORT}}\" -p {{RCON_PASSWORD}}; }",
     "config": {
         "files": "{\r\n    \"iw4m\/Configuration\/IW4MAdminSettings.json\": {\r\n        \"parser\": \"json\",\r\n        \"find\": {\r\n            \"Servers.*.IPAddress\": \"{{server.build.default.ip}}\",\r\n            \"Servers.*.Password\": \"{{server.build.env.RCON_PASSWORD}}\",\r\n            \"Servers.*.Port\": \"{{server.build.default.port}}\",\r\n            \"Servers.*.ManualLogPath\": \"\/home\/container\/boiii\/{{server.build.env.LOG_FILE}}.log\"\r\n        }\r\n    },\r\n    \"zone\/server.cfg\": {\r\n        \"parser\": \"file\",\r\n        \"find\": {\r\n            \"set rcon_password\": \"set rcon_password \\\"{{server.build.env.RCON_PASSWORD}}\\\"\"\r\n        }\r\n    },\r\n    \"zone\/server_cp.cfg\": {\r\n        \"parser\": \"file\",\r\n        \"find\": {\r\n            \"set rcon_password\": \"set rcon_password \\\"{{server.build.env.RCON_PASSWORD}}\\\"\"\r\n        }\r\n    },\r\n    \"zone\/server_zm.cfg\": {\r\n        \"parser\": \"file\",\r\n        \"find\": {\r\n            \"set rcon_password\": \"set rcon_password \\\"{{server.build.env.RCON_PASSWORD}}\\\"\"\r\n        }\r\n    }\r\n}",
         "startup": "{\r\n    \"start\": \"------- Game Initialization -------\"\r\n}",
