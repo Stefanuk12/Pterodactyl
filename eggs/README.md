@@ -13,7 +13,12 @@ Please note that this may take a lot of CPU. There are a few fixes.
   
 # [Plutonium](games/egg-plutonium.json)
 
-This egg is no longer supported and maintained.
+## Stats
+
+- Each server roughly takes up 3-5 GiB of disk space, if slimmed correctly
+  - IW4X would take 5-7 GiB
+- Each server takes up roughly 0.5-1 GiB of memory usage
+- CPU usage is rougly between 40% and 100%
 
 # [BOIII](games/egg-boiii.json)
 
