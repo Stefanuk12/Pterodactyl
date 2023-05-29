@@ -7,9 +7,18 @@
 
 # Notice
 
-Please note that this may take a lot of CPU. There are a few fixes.
-- 100% CPU Limit and allocate additional cores
-- Install the [Liquorix](https://liquorix.net/#install) kernel which can reduce usage by 30%+
+1. Please note that this may take a lot of CPU. There are a few fixes.
+   - 100% CPU Limit and allocate additional cores
+   - Install the [Liquorix](https://liquorix.net/#install) kernel which can reduce usage by 30%+
+2. Make sure to set your RCON password to something very secure (30 characters, symbols, etc.)
+
+# Using Mounts
+
+It is highly recommended that you do this. Majority of the files that a game server needs (i.e. the zone files) will not change between servers. Instead, you can setup a mount which allows certain eggs and nodes to access a shared resource.
+
+For more information, please refer to the [official documentation](https://pterodactyl.io/guides/mounts.html).
+
+**Make sure it is read only**
   
 # [Plutonium](games/egg-plutonium.json)
 
@@ -20,6 +29,14 @@ Please note that this may take a lot of CPU. There are a few fixes.
 - Each server takes up roughly 0.5-1 GiB of memory usage
 - CPU usage is rougly between 40% and 100%
 
+## IW4M
+
+This egg does not have IW4M Admin built in, instead it has the log server. You should have one instance of IW4M Admin in another container which controls **all** other Plutonium servers.
+
+For more information on how to setup, please refer to the [IW4M Egg](#config)
+
+*starts 30 seconds after server run*
+
 # [BOIII](games/egg-boiii.json)
 
 ## Stats
@@ -27,35 +44,10 @@ Please note that this may take a lot of CPU. There are a few fixes.
 - Each server roughly takes up 3-4 GiB of disk space, if slimmed correctly
 - Each server takes up roughly 2-4 GiB of memory usage
 - CPU usage is rougly between 40% and 100%
-  
-## Server Config
 
-This is the configuration file the server will use. Make sure this file is within the `zone` folder.
-- Name it as `server_` then the gamemode (i.e. zm, mp, cp). For example, `server_zm.cfg`
+## IW4M
 
-## Mod Folder
-
-If you are using mods, this should be set to `mods` but can be any name. Put all of your workshop mods inside that folder.
-
-## Enable IW4MAdmin
-
-If enabled:
-- Automatically installs IW4M on server installation
-- Automatically runs IW4M 30 seconds after server starts
-
-## RCON Password
-
-**Highly recommend this is changed. Use 30+ characters with symbols and uppercase, etc**
-
-- Used to send commands to the server remotely
-
-## Log file
-
-The name does not matter but generally set it to `games_` followed by the gamemode (i.e. zm, mp, cp). For example `games_zm`
-
-## Installation Slimming
-
-On server installation, all map files are removed. Only core files are kept which are **needed** for running the server.
+Please refer to [this](#iw4m)
 
 # [IW4M](misc/egg-iw4madmin.json)
 
@@ -66,7 +58,48 @@ On server installation, all map files are removed. Only core files are kept whic
 - CPU usage is usaully quite low (below 5%) but can spike up to 200% on startup
 
 ## Setup
+
 - Webfront is automatically configurated on server start, so do not change (all changes will be overridden)
 - You must set the servers within `/Configuration/IW4MAdminSettings.json` yourself. 
-  - The IP address, port, and RCON password can be found within the BOIII's server panel
-  - Make sure you set each server's `ManualLogPath` to something unique. You can name it something like `logs/` followed by the port of the server then `.log`. For example: `logs/1025.log`
+  - The IP address, port, and RCON password can be found within the server panel
+  - Make sure to set the `rcon_password` within your `server.cfg`, if the egg does not do it for you
+  
+## Config
+
+For each server set **either** the:
+- `ManualLogPath` to something unique. You can name it something like `logs/` followed by the port of the server then `.log`. For example: `logs/1025.log`
+- **Or** set the `GameLogServerUrl` to `http://SERVER_IP:PORT` (replace SERVER_IP, and PORT of course)
+
+### Example
+
+```json
+{
+  "IPAddress": "SERVER_IP",
+  "Port": PORT,
+  "Password": "RCON_PASSWORD",
+  "Rules": [],
+  "AutoMessages": [],
+  "ManualLogPath": null,
+  "RConParserVersion": "Plutonium T6 Parser",
+  "EventParserVersion": "Plutonium T6 Parser",
+  "ReservedSlotNumber": 0,
+  "GameLogServerUrl": "http://SERVER_IP:PORT",
+  "CustomHostname": null
+},
+```
+**OR**
+```json
+{
+  "IPAddress": "SERVER_IP",
+  "Port": PORT,
+  "Password": "RCON_PASSWORD",
+  "Rules": [],
+  "AutoMessages": [],
+  "ManualLogPath": "logs/PORT.log",
+  "RConParserVersion": "Plutonium T6 Parser",
+  "EventParserVersion": "Plutonium T6 Parser",
+  "ReservedSlotNumber": 0,
+  "GameLogServerUrl": null,
+  "CustomHostname": null
+}
+```
