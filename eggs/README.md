@@ -45,6 +45,10 @@ For more information on how to setup, please refer to the [IW4M Egg](#config)
 - Each server takes up roughly 2-4 GiB of memory usage
 - CPU usage is rougly between 40% and 100%
 
+## Executable Download
+
+This is the link that the install script uses to download boiii.exe. Make you set this to a working link like this <https://github.com/Ezz-lol/boiii-free/releases/latest/download/boiii.exe>
+
 ## IW4M
 
 Please refer to [this](#iw4m)
