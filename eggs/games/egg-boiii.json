@@ -4,7 +4,7 @@
         "version": "PTDL_v2",
         "update_url": null
     },
-    "exported_at": "2023-05-21T21:41:48+01:00",
+    "exported_at": "2023-06-08T22:10:35+01:00",
     "name": "boiii",
     "author": "stefanukpadd@gmail.com",
     "description": "Run a BOIII dedicated server.\r\n\r\nNote: Installation slimming is enabled by default, removing the pre-installed multiplayer maps. This is to reduce the size of the server. You can disable this and have all multiplayer maps installed by default. It's recommended to keep this installed and manually add the maps you want.",
@@ -13,16 +13,16 @@
         "ghcr.io\/stefanuk12\/ptero-boiii:latest": "ghcr.io\/stefanuk12\/ptero-boiii:latest"
     },
     "file_denylist": [],
-    "startup": "[ $IW4M == 1 ] && export DOTNET_CLI_TELEMETRY_OPTOUT=1 && sleep 30 && dotnet iw4m\/Lib\/IW4MAdmin.dll &\r\nwine64 boiii.exe -dedicated -headless +set fs_game \"{{MOD_FOLDER}}\" +set net_port \"{{SERVER_PORT}}\" +set logfile 2 +exec \"{{SERVER_CFG}}\" &\r\n{ chmod +x cod-rcon; sleep 30; echo \"Running RCON client\"; .\/cod-rcon -O -P \"{{SERVER_PORT}}\" -p {{RCON_PASSWORD}}; }",
+    "startup": "[ $IW4M == 1 ] && sleep 30 && \"${HOME}\/iw4m-log-server\" -p \"${SERVER_PORT}\" &\r\nwine64 boiii.exe -dedicated -headless +set fs_game \"{{MOD_FOLDER}}\" +set net_port \"{{SERVER_PORT}}\" +set logfile 2 +exec \"{{SERVER_CFG}}\" &\r\n{ chmod +x cod-rcon; sleep 30; echo \"Running RCON client\"; .\/cod-rcon -O -P \"{{SERVER_PORT}}\" -p {{RCON_PASSWORD}}; }",
     "config": {
-        "files": "{\r\n    \"iw4m\/Configuration\/IW4MAdminSettings.json\": {\r\n        \"parser\": \"json\",\r\n        \"find\": {\r\n            \"Servers.*.IPAddress\": \"{{server.build.default.ip}}\",\r\n            \"Servers.*.Password\": \"{{server.build.env.RCON_PASSWORD}}\",\r\n            \"Servers.*.Port\": \"{{server.build.default.port}}\",\r\n            \"Servers.*.ManualLogPath\": \"\/home\/container\/boiii\/{{server.build.env.LOG_FILE}}.log\"\r\n        }\r\n    },\r\n    \"zone\/server.cfg\": {\r\n        \"parser\": \"file\",\r\n        \"find\": {\r\n            \"set rcon_password\": \"set rcon_password \\\"{{server.build.env.RCON_PASSWORD}}\\\"\"\r\n        }\r\n    },\r\n    \"zone\/server_cp.cfg\": {\r\n        \"parser\": \"file\",\r\n        \"find\": {\r\n            \"set rcon_password\": \"set rcon_password \\\"{{server.build.env.RCON_PASSWORD}}\\\"\"\r\n        }\r\n    },\r\n    \"zone\/server_zm.cfg\": {\r\n        \"parser\": \"file\",\r\n        \"find\": {\r\n            \"set rcon_password\": \"set rcon_password \\\"{{server.build.env.RCON_PASSWORD}}\\\"\"\r\n        }\r\n    }\r\n}",
+        "files": "{\r\n    \"zone\/server.cfg\": {\r\n        \"parser\": \"file\",\r\n        \"find\": {\r\n            \"set rcon_password\": \"set rcon_password \\\"{{server.build.env.RCON_PASSWORD}}\\\"\"\r\n        }\r\n    },\r\n    \"zone\/server_cp.cfg\": {\r\n        \"parser\": \"file\",\r\n        \"find\": {\r\n            \"set rcon_password\": \"set rcon_password \\\"{{server.build.env.RCON_PASSWORD}}\\\"\"\r\n        }\r\n    },\r\n    \"zone\/server_zm.cfg\": {\r\n        \"parser\": \"file\",\r\n        \"find\": {\r\n            \"set rcon_password\": \"set rcon_password \\\"{{server.build.env.RCON_PASSWORD}}\\\"\"\r\n        }\r\n    }\r\n}",
         "startup": "{\r\n    \"start\": \"------- Game Initialization -------\"\r\n}",
         "logs": "{}",
         "stop": "^C"
     },
     "scripts": {
         "installation": {
-            "script": "#!\/bin\/bash\r\n# Install game server - create folder to hold files\r\ninstall_dir=\"\/mnt\/server\"\r\ncd \/tmp\r\nmkdir -p \"${install_dir}\/steamcmd\"\r\ncurl -sSL -o steamcmd.tar.gz https:\/\/steamcdn-a.akamaihd.net\/client\/installer\/steamcmd_linux.tar.gz\r\ntar -xzvf steamcmd.tar.gz -C \"${install_dir}\/steamcmd\"\r\nmkdir -p \"${install_dir}\/steamapps\" # Fix steamcmd disk write error when this folder is missing\r\ncd \"${install_dir}\/steamcmd\"\r\n.\/steamcmd.sh +@sSteamCmdForcePlatformType windows +force_install_dir \"${install_dir}\" +login anonymous +app_update 545990 validate +quit\r\n\r\n# Install server files\r\ncd \"${install_dir}\"\r\ncp -r .\/UnrankedServer\/* .\r\ncurl -Ls \"https:\/\/codeload.github.com\/Dss0\/t7-server-config\/zip\/refs\/heads\/main\" -o main.zip\r\nunzip -o main.zip\r\ncp -r .\/t7-server-config-main\/* .\r\necho \"Installed server config files\"\r\n\r\n# Install boiii\r\nmkdir -p mods\r\ncurl -Ls \"https:\/\/updater.xlabs.dev\/boiii\/boiii.exe\" -o \"boiii.exe\"\r\necho \"Installed boiii\"\r\n\r\n# Install rcon client\r\ncurl -Ls \"https:\/\/github.com\/Stefanuk12\/cod-rcon\/releases\/latest\/download\/cod-rcon-x86_64-unknown-linux-gnu.tar.gz\" -o cod-rcon.tar.gz\r\ntar -xzvf cod-rcon.tar.gz -C \"${install_dir}\"\r\n\r\n# Installing IW4M\r\nif [ ${IW4M} == 1 ]\r\nthen\r\n# Create the installation directory\r\nmkdir -p \"${install_dir}\/iw4m\"\r\ncd \"${install_dir}\/iw4m\"\r\n\r\n# Download IW4M\r\ncurl -Ls \"https:\/\/github.com\/RaidMax\/IW4M-Admin\/releases\/download\/2023.05.15.1-prerelease\/IW4MAdmin-2023.05.15.1.zip\" -o main.zip\r\nunzip -o main.zip\r\nrm main.zip\r\n\r\n# Download the config\r\ncurl -Ls \"https:\/\/cdn.discordapp.com\/attachments\/749611171216359474\/1108504949836496996\/Configuration.zip\" -o main_iw4m.zip\r\nunzip -o main_iw4m.zip -d Configuration\r\nrm main_iw4m.zip\r\n\r\n# CD back\r\ncd \"${install_dir}\"\r\nfi\r\n\r\n# Cleanup\r\nrm -r steamapps steamcmd main.zip README.md t7-server-config-main UnrankedServer cod-rcon.tar.gz\r\nrm BOIII_CP_Server.bat BOIII_MP_Server.bat BOIII_ZM_Server.bat copydedicated.bat Launch_Server.bat\r\n\r\n# Slimming\r\nif [ ${SLIM_ZONE} == 1 ]\r\nthen\r\n# Create the folders\r\nessential_dir=\"${install_dir}\/essential\"\r\nzone_dir=\"${install_dir}\/zone\"\r\nmkdir -p $essential_dir\r\n\r\n# Copy needed files over\r\ncp -r ${zone_dir}\/{*patch*,*core*,*patch*,$SERVER_CFG} $essential_dir\r\n\r\n# Transfer files over and delete essential dir\r\nrm -r ${zone_dir}\/*\r\ncp -r $essential_dir\/* ${zone_dir}\r\nrm -r $essential_dir\r\necho \"Slimmed installation\"\r\nfi\r\n\r\n# Done\r\necho \"Done!\"",
+            "script": "#!\/bin\/bash\r\n# Install game server - create folder to hold files\r\ninstall_dir=\"\/mnt\/server\"\r\ncd \/tmp\r\nmkdir -p \"${install_dir}\/steamcmd\"\r\ncurl -sSL -o steamcmd.tar.gz https:\/\/steamcdn-a.akamaihd.net\/client\/installer\/steamcmd_linux.tar.gz\r\ntar -xzvf steamcmd.tar.gz -C \"${install_dir}\/steamcmd\"\r\nmkdir -p \"${install_dir}\/steamapps\" # Fix steamcmd disk write error when this folder is missing\r\ncd \"${install_dir}\/steamcmd\"\r\n.\/steamcmd.sh +@sSteamCmdForcePlatformType windows +force_install_dir \"${install_dir}\" +login anonymous +app_update 545990 validate +quit\r\n\r\n# Install server files\r\ncd \"${install_dir}\"\r\ncp -r .\/UnrankedServer\/* .\r\ncurl -Ls \"https:\/\/codeload.github.com\/Dss0\/t7-server-config\/zip\/refs\/heads\/main\" -o main.zip\r\nunzip -o main.zip\r\ncp -r .\/t7-server-config-main\/* .\r\necho \"Installed server config files\"\r\n\r\n# Install boiii\r\nmkdir -p mods\r\ncurl -Ls \"$BOIII\" -o \"boiii.exe\"\r\necho \"Installed boiii\"\r\n\r\n# Install rcon client\r\ncurl -Ls \"https:\/\/github.com\/Stefanuk12\/cod-rcon\/releases\/latest\/download\/cod-rcon-x86_64-unknown-linux-gnu.tar.gz\" -o cod-rcon.tar.gz\r\ntar -xzvf cod-rcon.tar.gz -C \"${install_dir}\"\r\n\r\n# Installing i4wm log server\r\nif [ ${IW4M} == 1 ]\r\nthen\r\n# Download the iw4m log server\r\ncurl -Ls \"https:\/\/github.com\/Stefanuk12\/iw4m-log-server\/releases\/latest\/download\/iw4m-log-server-x86_64-unknown-linux-gnu.tar.gz\" -o main.tar.gz\r\ntar -xzvf main.tar.gz -C \"${install_dir}\"\r\nrm main.tar.gz\r\nfi\r\n\r\n# Cleanup\r\nrm -r steamapps steamcmd main.zip README.md t7-server-config-main UnrankedServer cod-rcon.tar.gz\r\nrm BOIII_CP_Server.bat BOIII_MP_Server.bat BOIII_ZM_Server.bat copydedicated.bat Launch_Server.bat\r\n\r\n# Slimming\r\nif [ ${SLIM_ZONE} == 1 ]\r\nthen\r\n# Create the folders\r\nessential_dir=\"${install_dir}\/essential\"\r\nzone_dir=\"${install_dir}\/zone\"\r\nmkdir -p $essential_dir\r\n\r\n# Copy needed files over\r\ncp -r ${zone_dir}\/{*patch*,*core*,*patch*,$SERVER_CFG} $essential_dir\r\n\r\n# Transfer files over and delete essential dir\r\nrm -r ${zone_dir}\/*\r\ncp -r $essential_dir\/* ${zone_dir}\r\nrm -r $essential_dir\r\necho \"Slimmed installation\"\r\nfi\r\n\r\n# Done\r\necho \"Done!\"",
             "container": "ghcr.io\/parkervcp\/installers:debian",
             "entrypoint": "bash"
         }
@@ -49,8 +49,8 @@
             "field_type": "text"
         },
         {
-            "name": "Enable IW4MAdmin",
-            "description": "",
+            "name": "IW4M Log Server - Enabled",
+            "description": "Installs a log server for IW4M Admin (on installation) and runs it on startup. This does not install IW4M Admin itself, run IW4M Admin on a separate container.",
             "env_variable": "IW4M",
             "default_value": "1",
             "user_viewable": true,
@@ -69,23 +69,23 @@
             "field_type": "text"
         },
         {
-            "name": "Log File",
-            "description": "The name of the log file",
-            "env_variable": "LOG_FILE",
-            "default_value": "games_mp",
-            "user_viewable": true,
-            "user_editable": true,
-            "rules": "required|string",
-            "field_type": "text"
-        },
-        {
             "name": "Installation Slimming",
             "description": "Removes all unnecessary files from zone, except the ones that are needed.",
             "env_variable": "SLIM_ZONE",
-            "default_value": "1",
+            "default_value": "0",
             "user_viewable": true,
             "user_editable": true,
             "rules": "required|boolean",
+            "field_type": "text"
+        },
+        {
+            "name": "Executable Download",
+            "description": "The link to download boiii.exe",
+            "env_variable": "BOIII",
+            "default_value": "https:\/\/updater.xlabs.dev\/boiii\/boiii.exe",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": "required|string|url",
             "field_type": "text"
         }
     ]

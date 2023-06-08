@@ -70,6 +70,8 @@ For each server set **either** the:
 - `ManualLogPath` to something unique. You can name it something like `logs/` followed by the port of the server then `.log`. For example: `logs/1025.log`
 - **Or** set the `GameLogServerUrl` to `http://SERVER_IP:PORT` (replace SERVER_IP, and PORT of course)
 
+**NOTE IF USING T7**: You must set `ManualLogPath` to the **full** path, regardless if you are using a `GameLogServerUrl` or not.
+
 ### Example
 
 ```json
