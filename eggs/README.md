@@ -39,6 +39,8 @@ For more information on how to setup, please refer to the [IW4M Egg](#config)
 
 # [BOIII](games/egg-boiii.json)
 
+This egg uses [ezz-boiii](https://github.com/Ezz-lol/boiii-free), however, you can revert to the original by changing the download for the [executable](#executable-download) and [config](#config-download)
+
 ## Stats
 
 - Each server roughly takes up 3-4 GiB of disk space, if slimmed correctly
@@ -48,6 +50,10 @@ For more information on how to setup, please refer to the [IW4M Egg](#config)
 ## Executable Download
 
 This is the link that the install script uses to download boiii.exe. Make you set this to a working link like this <https://github.com/Ezz-lol/boiii-free/releases/latest/download/boiii.exe>
+
+## Config Download
+
+This is the GitHub repository that has the t7-config files. Make sure to change it if needed.
 
 ## IW4M
 
