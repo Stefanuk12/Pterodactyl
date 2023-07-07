@@ -1,6 +1,10 @@
 #!/bin/bash
 cd /home/container
 
+# Make internal Docker IP address available to processes.
+INTERNAL_IP=$(ip route get 1 | awk '{print $(NF-2);exit}')
+export INTERNAL_IP
+
 # Installing bootstrapper / updater
 wget https://github.com/mxve/plutonium-updater.rs/releases/latest/download/plutonium-updater-x86_64-unknown-linux-gnu.tar.gz -O latestupdater.tar.gz -q --show-progress
 tar -xvf latestupdater.tar.gz -C localappdata/Plutonium

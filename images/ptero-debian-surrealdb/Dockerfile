@@ -1,0 +1,18 @@
+FROM debian:bullseye-slim
+LABEL author="Stefanuk12" maintainer="stefanukpadd@gmail.com"
+
+## Install dependencies
+USER root
+RUN sudo apt update \
+    && sudo apt upgrade -y \
+    && sudo apt install curl -y
+
+## Installing SurrealDB
+RUN curl -sSf https://install.surrealdb.com | sudo sh
+
+## Finishing up
+USER container
+WORKDIR	/home/container
+
+COPY ./entrypoint.sh /entrypoint.sh
+CMD	["/bin/bash", "/entrypoint.sh"]
