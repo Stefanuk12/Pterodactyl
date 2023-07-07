@@ -8,7 +8,7 @@ RUN apt update \
     && apt install curl -y
 
 ## Installing SurrealDB
-RUN curl -sSf https://install.surrealdb.com | sudo sh
+RUN curl -sSf https://install.surrealdb.com | sh
 
 ## Finishing up
 USER container
