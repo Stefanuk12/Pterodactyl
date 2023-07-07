@@ -1,4 +1,4 @@
-FROM debian:bullseye-slim
+FROM ghcr.io/parkervcp/yolks:debian
 LABEL author="Stefanuk12" maintainer="stefanukpadd@gmail.com"
 
 ## Install dependencies
