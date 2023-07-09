@@ -6,4 +6,4 @@ USER container
 WORKDIR	/home/container
 
 COPY ./entrypoint.sh /entrypoint.sh
-ENTRYPOINT [ "/entrypoint.sh" ]
+ENTRYPOINT [ "/bin/bash", "/entrypoint.sh" ]
