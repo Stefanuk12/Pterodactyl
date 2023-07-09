@@ -1,12 +1,18 @@
 FROM surrealdb/surrealdb:latest
-FROM ghcr.io/parkervcp/yolks:ubuntu
-LABEL author="Stefanuk12" maintainer="stefanukpadd@gmail.com"
 
-## Setup the container
-USER container
-WORKDIR	/home/container
-COPY ./entrypoint.sh /entrypoint.sh
+FROM        --platform=$TARGETOS/$TARGETARCH alpine:latest
 
-## Starting the container
-ENTRYPOINT []
-CMD	["/bin/bash", "/entrypoint.sh"]
+LABEL       author="Matthew Penner" maintainer="matthew@pterodactyl.io"
+
+LABEL       org.opencontainers.image.source="https://github.com/pterodactyl/yolks"
+LABEL       org.opencontainers.image.licenses=MIT
+
+RUN         apk add --update --no-cache ca-certificates tzdata \
+				&& adduser -D -h /home/container container
+
+USER        container
+ENV         USER=container HOME=/home/container
+WORKDIR     /home/container
+
+COPY        ./entrypoint.sh /entrypoint.sh
+CMD         [ "/bin/ash", "/entrypoint.sh" ]
