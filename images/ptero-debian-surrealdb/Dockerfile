@@ -1,4 +1,5 @@
 FROM surrealdb/surrealdb:latest
+FROM ghcr.io/parkervcp/yolks:ubuntu
 LABEL author="Stefanuk12" maintainer="stefanukpadd@gmail.com"
 
 ## Setup the container
