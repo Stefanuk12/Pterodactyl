@@ -1,5 +1,9 @@
-FROM ghcr.io/parkervcp/yolks:debian
+FROM surrealdb/surrealdb:latest
 LABEL author="Stefanuk12" maintainer="stefanukpadd@gmail.com"
 
-## Installing SurrealDB
-RUN curl -sSf https://install.surrealdb.com | sh
+## Setup the container
+USER container
+WORKDIR	/home/container
+
+COPY ./entrypoint.sh /entrypoint.sh
+CMD	["/bin/bash", "/entrypoint.sh"]
