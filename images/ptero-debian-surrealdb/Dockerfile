@@ -1,11 +1,11 @@
-FROM ghcr.io/parkervcp/yolks:debian
+FROM ghcr.io/parkervcp/alpine:debian
 LABEL author="Stefanuk12" maintainer="stefanukpadd@gmail.com"
 
 ## Install dependencies
 USER root
-RUN apt update \
-    && apt upgrade -y \
-    && apt install curl -y
+RUN apk update \
+    && apk upgrade -y \
+    && apt add curl -y
 
 ## Installing SurrealDB
 RUN curl -sSf https://install.surrealdb.com | sh
