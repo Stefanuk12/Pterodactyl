@@ -4,7 +4,7 @@
         "version": "PTDL_v2",
         "update_url": null
     },
-    "exported_at": "2023-07-10T11:16:16+01:00",
+    "exported_at": "2023-07-10T19:50:20+01:00",
     "name": "surrealdb",
     "author": "stefanukpadd@gmail.com",
     "description": "Runs a single-node SurrealDB server.",
@@ -13,10 +13,10 @@
         "ghcr.io\/stefanuk12\/ptero-debian-surrealdb:dev": "ghcr.io\/stefanuk12\/ptero-debian-surrealdb:dev"
     },
     "file_denylist": [],
-    "startup": "strict_arg=\"--strict\"; if [ $strict_arg == 0 ]; then strict_arg=\"\"; fi; surreal start {{DB_PATH}} --user {{USERNAME}} --pass {{PASSWORD}} --bind \"0.0.0.0:{{SERVER_PORT}}\" --log {{LOG_LEVEL}} ${strict_arg}",
+    "startup": "strict_arg=\"--strict\"; if [ {{STRICT}} == 0 ]; then strict_arg=\"\"; fi; surreal start {{DB_PATH}} --user {{USERNAME}} --pass {{PASSWORD}} --bind \"0.0.0.0:{{SERVER_PORT}}\" --log {{LOG_LEVEL}} ${strict_arg}",
     "config": {
         "files": "{}",
-        "startup": "{\r\n    \"done\": \"8888\"\r\n}",
+        "startup": "{\r\n    \"done\": \"8888888P'\"\r\n}",
         "logs": "{}",
         "stop": "^C"
     },
@@ -65,7 +65,7 @@
             "default_value": "0",
             "user_viewable": true,
             "user_editable": true,
-            "rules": "required|bool",
+            "rules": "required|boolean",
             "field_type": "text"
         },
         {
