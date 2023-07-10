@@ -3,7 +3,7 @@ FROM ghcr.io/parkervcp/yolks:rust_latest
 # Installing some essentials
 USER root
 RUN apt update \
-    && apt -y install build-essential checkinstall zlib1g-dev
+    && apt install build-essential checkinstall zlib1g-dev libssl-dev -y
 
 # Setting up the container
 USER container
