@@ -1,5 +1,18 @@
-FROM surrealdb/surrealdb:latest
-FROM ghcr.io/parkervcp/yolks:alpine
+FROM ghcr.io/parkervcp/yolks:debian
+LABEL author="Stefanuk12" maintainer="stefanukpadd@gmail.com"
 
+## Install dependencies
 USER root
-RUN apk add sed
+RUN apt update \
+    && apt upgrade -y \
+    && apt install curl -y
+
+## Installing SurrealDB
+RUN curl -sSf https://install.surrealdb.com | sh
+
+## Finishing up
+USER container
+WORKDIR	/home/container
+
+COPY ./entrypoint.sh /entrypoint.sh
+CMD	["/bin/bash", "/entrypoint.sh"]
