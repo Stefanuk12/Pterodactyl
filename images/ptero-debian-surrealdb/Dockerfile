@@ -1,4 +1,4 @@
-FROM ghcr.io/parkervcp/alpine:debian
+FROM ghcr.io/parkervcp/yolks:alpine
 LABEL author="Stefanuk12" maintainer="stefanukpadd@gmail.com"
 
 ## Install dependencies
