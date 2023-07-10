@@ -5,7 +5,7 @@ LABEL author="Stefanuk12" maintainer="stefanukpadd@gmail.com"
 USER root
 RUN apk update \
     && apk upgrade \
-    && apk add curl
+    && apk add curl gcompat
 
 ## Installing SurrealDB
 RUN curl -sSf https://install.surrealdb.com | sh
