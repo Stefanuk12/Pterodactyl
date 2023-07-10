@@ -9,3 +9,10 @@ RUN apk update \
 
 ## Installing SurrealDB
 RUN curl -sSf https://install.surrealdb.com | sh
+
+## Finishing up
+USER container
+WORKDIR	/home/container
+
+COPY ./entrypoint.sh /entrypoint.sh
+CMD	["/bin/ash", "/entrypoint.sh"]
