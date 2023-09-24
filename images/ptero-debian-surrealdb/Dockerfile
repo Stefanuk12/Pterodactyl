@@ -5,7 +5,8 @@ LABEL author="Stefanuk12" maintainer="stefanukpadd@gmail.com"
 USER root
 RUN apt update \
     && apt upgrade -y \
-    && apt install curl -y
+    && apt install curl -y \
+    && apt install libc6 -y
 
 ## Installing SurrealDB
 RUN curl -sSf https://install.surrealdb.com | sh
