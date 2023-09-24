@@ -1,4 +1,4 @@
-FROM ghcr.io/parkervcp/yolks:debian
+FROM ghcr.io/parkervcp/yolks:ubuntu
 LABEL author="Stefanuk12" maintainer="stefanukpadd@gmail.com"
 
 ## Install dependencies
