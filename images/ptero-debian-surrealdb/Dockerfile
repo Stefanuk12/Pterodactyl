@@ -6,7 +6,7 @@ USER root
 RUN apt update \
     && apt upgrade -y \
     && apt install curl -y \
-    && apt install libc6 -y
+    && apt-get install libc6 libstdc++6 -y
 
 ## Installing SurrealDB
 RUN curl -sSf https://install.surrealdb.com | sh
